@@ -1,28 +1,73 @@
 {
-  "name": "js-utils",
-  "private": true,
+  "name": "@hmin/js-toolkit",
+  "description": "Lightweight modern JavaScript utility library",
   "version": "0.0.1",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "utility"
+  ],
+  "author": "hmin",
+  "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hmin01/jstoolkit.git"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "build": "npm run clean && tsc --noEmit && vite build --sourcemap false",
+    "clean": "rimraf dist",
+    "prepack": "yarn test && yarn build",
+    "preview": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz",
     "test": "vitest run --coverage --typecheck"
   },
   "exports": {
     ".": "./src/index.ts",
     "./math": "./src/math/index.ts"
   },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": {
+          "types": "./index.d.mts",
+          "default": "./index.mjs"
+        },
+        "require": {
+          "types": "./index.d.ts",
+          "default": "./index.cjs"
+        }
+      },
+      "./math": {
+        "import": {
+          "types": "./math/index.d.mts",
+          "default": "./math/index.mjs"
+        },
+        "require": {
+          "types": "./math/index.d.ts",
+          "default": "./math/index.cjs"
+        }
+      }
+    },
+    "types": "./dist/index.d.ts"
+  },
   "devDependencies": {
     "@vitest/coverage-istanbul": "4.0.7",
     "glob": "^11.0.3",
     "path": "^0.12.7",
+    "rimraf": "^6.1.0",
     "typescript": "~5.9.3",
     "vite": "^7.1.7",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.7"
   },
-  "description": "js utils",
   "main": "index.js",
   "dependencies": {
     "@types/node": "^24.10.0",
@@ -36,12 +81,5 @@
     "rollup": "^4.52.5",
     "source-map-js": "^1.2.1",
     "tinyglobby": "^0.2.15"
-  },
-  "keywords": [
-    "javascript",
-    "typescript",
-    "utilities"
-  ],
-  "author": "hmin",
-  "license": "MIT"
+  }
 }
