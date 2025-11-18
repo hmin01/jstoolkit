@@ -13,7 +13,7 @@ describe("withTimeout", () => {
   });
 
   it("should reject with timeout error if the function takes too long", async () => {
-    expect(
+    await expect(
       withTimeout(async () => {
         await delay(100);
       }, 50)
