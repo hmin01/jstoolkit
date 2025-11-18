@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { at } from "./at";
 
 describe("at", () => {
+  const invalidIndexErrorMessage = "Index must be an integer";
+
   const arr = ["a", "b", "c", "d", "e"];
 
   it("should return the element at the given indices", () => {
@@ -20,9 +22,9 @@ describe("at", () => {
   });
 
   it("should throw type error for non-integer indices", () => {
-    expect(() => at(arr, [1.5, 2])).toThrow(TypeError);
-    expect(() => at(arr, [0, "2" as any])).toThrow(TypeError);
-    expect(() => at(arr, [Infinity])).toThrow(TypeError);
-    expect(() => at(arr, [NaN])).toThrow(TypeError);
+    expect(() => at(arr, [1.5, 2])).toThrow(invalidIndexErrorMessage);
+    expect(() => at(arr, [0, "2" as any])).toThrow(invalidIndexErrorMessage);
+    expect(() => at(arr, [Infinity])).toThrow(invalidIndexErrorMessage);
+    expect(() => at(arr, [NaN])).toThrow(invalidIndexErrorMessage);
   });
 });
