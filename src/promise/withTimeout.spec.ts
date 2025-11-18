@@ -5,9 +5,9 @@ import { withTimeout } from "./withTimeout";
 describe("withTimeout", () => {
   it("should resolve if the function resolves before the timeout", async () => {
     const result = await withTimeout(async () => {
-      await delay(50);
+      await delay(10);
       return "success";
-    }, 100);
+    }, 50);
 
     expect(result).toBe("success");
   });
@@ -15,8 +15,8 @@ describe("withTimeout", () => {
   it("should reject with timeout error if the function takes too long", async () => {
     await expect(
       withTimeout(async () => {
-        await delay(100);
-      }, 50)
+        await delay(50);
+      }, 10)
     ).rejects.toThrow("Operation timed out");
   });
 });

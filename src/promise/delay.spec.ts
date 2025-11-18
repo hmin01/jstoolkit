@@ -6,8 +6,8 @@ import { delay } from "./delay";
  * @see https://github.com/toss/es-toolkit/blob/v1.41.0/src/promise/delay.spec.ts
  */
 describe("delay", () => {
-  const delayMs = 50;
-  const delayLongMs = 200;
+  const delayMs = 10;
+  const delayLongMs = 100;
 
   it("pauses execution for the specified time", async () => {
     const start = Date.now();

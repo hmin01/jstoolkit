@@ -27,7 +27,7 @@ describe("Semaphore", () => {
     });
 
     // Wait a moment to ensure the acquire is blocked
-    await delay(100);
+    await delay(10);
     expect(acquired).toBe(false);
 
     semaphore.release();
@@ -44,7 +44,7 @@ describe("Semaphore", () => {
     const task = async (id: number) => {
       await semaphore.acquire();
       results.push(id);
-      await delay(50);
+      await delay(10);
       semaphore.release();
     };
     await Promise.all(tasks.map((id) => task(id)));
