@@ -12,7 +12,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hmin01/jstoolkit.git"
+    "url": "https://github.com/hmin01/js-toolkit.git"
   },
   "scripts": {
     "dev": "vite",
