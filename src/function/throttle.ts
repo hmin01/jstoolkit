@@ -1,25 +1,13 @@
 import type { OperationOptions } from "../_types";
 import { debounce } from "./debounce";
 
-interface ThrottleOptions extends OperationOptions {
+export interface ThrottleOptions extends OperationOptions {
   /**
    * Specify when to invoke the function
    * - "leading": invoke at the start of the wait period
    * - "trailing": invoke at the end of the wait period
    */
   edges?: Array<"leading" | "trailing">;
-}
-
-export interface ThrottleFunction<TFunc extends (...args: any[]) => void> {
-  (...args: Parameters<TFunc>): void;
-  /**
-   * Cancel any pending function invocations
-   */
-  cancel: () => void;
-  /**
-   * Immediately invoke the throttled function if there is a pending invocation
-   */
-  flush: () => void;
 }
 
 /**
@@ -30,11 +18,7 @@ export interface ThrottleFunction<TFunc extends (...args: any[]) => void> {
  * @param options Throttle options
  * @returns The throttled function
  */
-export function throttle<TFunc extends (...args: any[]) => void>(
-  func: TFunc,
-  wait: number,
-  { edges = ["leading", "trailing"], signal }: ThrottleOptions = {}
-): ThrottleFunction<TFunc> {
+export function throttle<TFunc extends (...args: any[]) => void>(func: TFunc, wait: number, { edges = ["leading", "trailing"], signal }: ThrottleOptions = {}) {
   let startedAt: number | null = null;
 
   const debounced = debounce(func, wait, { edges, signal });
