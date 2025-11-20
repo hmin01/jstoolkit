@@ -29,16 +29,18 @@ jobs:
       - name: Run prepack
         run: yarn prepack
 
-      - name: Get version from package.json
-        id: get_version
+      - name: Get info from package.json
+        id: get_info
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
 
       - name: Check if version already published
         id: check_version
         run: |
-          if npm view @${{ github.repository }}@${{ steps.get_version.outputs.version }} version > /dev/null 2>&1; then
+          if npm view ${{ steps.get_info.outputs.package_name }}@${{ steps.get_info.outputs.version }} version > /dev/null 2>&1; then
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
