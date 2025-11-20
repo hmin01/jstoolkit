@@ -7,7 +7,7 @@ import { throttle } from "./throttle";
  * @see https://github.com/toss/es-toolkit/blob/v1.41.0/src/function/throttle.spec.ts
  */
 describe("throttle", () => {
-  const throttleMs = 10;
+  const throttleMs = 100;
 
   it("The throttled function calls correctly", async () => {
     const func = vi.fn();

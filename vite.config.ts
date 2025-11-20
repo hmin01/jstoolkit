@@ -14,11 +14,18 @@ export default defineConfig({
       formats: ["es", "cjs"],
     },
     rollupOptions: {
+      external: [],
       input: Object.fromEntries(
         glob
           .sync("src/**/*.ts")
           .filter((path) => !path.endsWith(".spec.ts"))
-          .map((path) => [path.replace(/^src\//, "").replace(/\.ts$/, ""), resolve(__dirname, path)])
+          .map((path) => [
+            path
+              .replace(/^src\//, "")
+              .replace(/\.ts$/, "")
+              .replace(/\/index$/, ""),
+            resolve(__dirname, path),
+          ])
       ),
       output: [
         {
@@ -26,12 +33,14 @@ export default defineConfig({
           entryFileNames: "[name].mjs",
           chunkFileNames: "chunks/[name]-[hash].mjs",
           sourcemap: false,
+          hoistTransitiveImports: false,
         },
         {
           format: "cjs",
           entryFileNames: "[name].cjs",
           chunkFileNames: "chunks/[name]-[hash].cjs",
           sourcemap: false,
+          hoistTransitiveImports: false,
         },
       ],
     },
@@ -39,10 +48,7 @@ export default defineConfig({
   plugins: [
     dts({
       entryRoot: "src",
-      exclude: ["**/*.spec.ts"],
-      include: ["src/**/*.ts"],
-      outDir: "dist",
-      tsconfigPath: resolve(__dirname, "tsconfig.json"),
+      rollupTypes: true,
     }),
   ],
   test: {
