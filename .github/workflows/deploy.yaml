@@ -3,9 +3,11 @@ name: Deploy
 on:
   push:
     branches: ["master"]
+    tags: ["v*.*.*"]
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   deploy:
@@ -58,8 +60,6 @@ jobs:
 
       - name: Publish package
         run: npm publish --access public --non-interactive
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create tag
         run: |
