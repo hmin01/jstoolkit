@@ -4,4 +4,5 @@ export * from "./floorTo";
 export * from "./inRange";
 export * from "./roundTo";
 export * from "./sum";
+export * from "./sumBy";
 export * from "./truncateTo";
